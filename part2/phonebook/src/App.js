@@ -88,38 +88,25 @@ const App = () => {
   }
 
   const handleDeletePerson = function (id) {
-    let personToRemove = persons.find(e => e.id === id)
     personsService
       .remove(id)
       .then(() => {
         setPersons(persons.filter(e => e.id !== id))
-
-      }).catch(() => {
-        setNotification({
-          message: `${personToRemove.name} Was deleted on the server`,
-          type: 'error'
-        })
-        setPersons(persons.filter(e => e.id !== id))
-        setTimeout(() => {
-          setNotification({
-            message: null,
-          })
-        }, 2000)
-      })
+      }).catch(error => { handleServerError(error) })
   }
 
   const handleOnSubmitPersonForm = (newPerson) => {
-    let personToUpdate = persons.find(e => e.name === newPerson.name)
-    if (personToUpdate) {
-      personToUpdate.number = newPerson.number
+   
+    if (persons.some(e => e.name === newPerson.name)) {
+      newPerson.id = persons.find(e => e.name === newPerson.name).id
       let confirmUpdate = window.confirm(`El ${newPerson.name} ya se encuentra en la agenda, actualizar?`)
       if (confirmUpdate) {
         personsService
-          .update(personToUpdate.id, personToUpdate)
+          .update(newPerson.id, newPerson)
           .then(person => {
-            setPersons(persons.map(e => (e.id == personToUpdate.id) ? personToUpdate : e))
+            setPersons(persons.map(e => (e.id == newPerson.id) ? newPerson : e))
             setNotification({
-              message: `${personToUpdate.name} Update correctly`,
+              message: `${newPerson.name} Update correctly`,
               type: 'succes'
             })
             setTimeout(() => {
@@ -127,7 +114,7 @@ const App = () => {
                 message: null,
               })
             }, 2000)
-          })
+          }).catch(error => { handleServerError(error) })
       }
     } else {
       personsService
@@ -143,11 +130,24 @@ const App = () => {
               message: null,
             })
           }, 2000)
-        })
+        }).catch(error => { handleServerError(error) })
     }
   }
 
-  const personsToShow = (filterName.trim()) ? persons.filter(e => e.name.toLowerCase().includes(filterName.trim())) : persons
+  const handleServerError = (error) => {
+    setNotification({
+      message: error.data.error,
+      type: 'error'
+    })
+    setTimeout(() => {
+      setNotification({
+        message: null,
+      })
+    }, 2000)
+  }
+
+  const filterValueTrimed = filterName.trim()
+  const personsToShow = (filterValueTrimed) ? persons.filter(e => e.name.toLowerCase().includes(filterValueTrimed)) : persons
 
   return (
     <div>
