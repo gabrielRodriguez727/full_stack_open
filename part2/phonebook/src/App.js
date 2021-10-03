@@ -92,11 +92,12 @@ const App = () => {
       .remove(id)
       .then(() => {
         setPersons(persons.filter(e => e.id !== id))
-      }).catch(error => { handleServerError(error) })
+      })
+      .catch(error => { handleServerError(error) })
   }
 
   const handleOnSubmitPersonForm = (newPerson) => {
-   
+
     if (persons.some(e => e.name === newPerson.name)) {
       newPerson.id = persons.find(e => e.name === newPerson.name).id
       let confirmUpdate = window.confirm(`El ${newPerson.name} ya se encuentra en la agenda, actualizar?`)
@@ -114,7 +115,8 @@ const App = () => {
                 message: null,
               })
             }, 2000)
-          }).catch(error => { handleServerError(error) })
+          })
+          .catch(error => { handleServerError(error) })
       }
     } else {
       personsService
@@ -130,7 +132,8 @@ const App = () => {
               message: null,
             })
           }, 2000)
-        }).catch(error => { handleServerError(error) })
+        })
+        .catch(error => { handleServerError(error) })
     }
   }
 
@@ -146,7 +149,7 @@ const App = () => {
     }, 2000)
   }
 
-  const filterValueTrimed = filterName.trim()
+  const filterValueTrimed = filterName.toLowerCase().trim()
   const personsToShow = (filterValueTrimed) ? persons.filter(e => e.name.toLowerCase().includes(filterValueTrimed)) : persons
 
   return (
