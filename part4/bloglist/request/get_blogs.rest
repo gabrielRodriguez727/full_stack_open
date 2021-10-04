@@ -1,0 +1,10 @@
+//Get all 
+GET http://localhost:3001/api/blogs
+
+###
+//Get by id
+GET  http://localhost:3001/api/blogs/615a541549835ae613d2c4c0
+
+###
+//Error: Get by id
+GET  http://localhost:3001/api/blogs/11

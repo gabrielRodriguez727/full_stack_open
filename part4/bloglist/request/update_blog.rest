@@ -1,0 +1,17 @@
+//Update 
+PUT http://localhost:3001/api/blogs/615a541549835ae613d2c4c0 HTTP/1.1
+content-type: application/json
+
+{
+    "author": "grc"
+}
+
+
+###
+//Error: Model validation
+PUT http://localhost:3001/api/blogs/615a541549835ae613d2c4c0 HTTP/1.1
+content-type: application/json
+
+{
+    "author": "g"
+}
