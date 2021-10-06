@@ -3,49 +3,54 @@ import Blog from '../models/blog.js'
 const blogsRouter = Router()
 
 
-blogsRouter.get('/', (request, response) => {
-    Blog.find({}).then(blogs => {
+blogsRouter.get('/', async (request, response) => {
+    try {
+        const blogs = await Blog.find({})
         response.json(blogs)
-    })
+    } catch (error) {
+        next(error)
+    }
 })
 
-blogsRouter.get('/:id', (request, response, next) => {
-    Blog.findById(request.params.id)
-        .then(blog => {
-            if (blog) {
-                response.json(blog)
-            } else {
-                response.status(404).end()
-            }
-        })
-        .catch(error => next(error))
+blogsRouter.get('/:id', async (request, response, next) => {
+    try {
+        const blog = await Blog.findById(request.params.id)
+        if (blog) {
+            response.json(blog)
+        } else {
+            response.status(404).end()
+        }
+    } catch (error) {
+        next(error)
+    }
 })
 
-blogsRouter.post('/', (request, response, next) => {
+blogsRouter.post('/', async (request, response, next) => {
     const body = request.body
-
     const blog = new Blog({
         content: body.content,
         author: body.author,
         url: body.url
     })
+    try {
+        const savedBlog = await blog.save()
+        response.json(savedBlog)
+    } catch (error) {
+        next(error)
+    }
 
-    blog.save()
-        .then(savedBlog => {
-            response.json(savedBlog)
-        })
-        .catch(error => next(error))
 })
 
-blogsRouter.delete('/:id', (request, response, next) => {
-    Blog.findByIdAndDelete(request.params.id)
-        .then(() => {
-            response.status(204).end()
-        })
-        .catch(error => next(error))
+blogsRouter.delete('/:id', async (request, response, next) => {
+    try {
+        await Blog.findByIdAndDelete(request.params.id)
+        response.status(204).end()
+    } catch (error) {
+        next(error)
+    }
 })
 
-blogsRouter.put("/:id", (request, response, next) => {
+blogsRouter.put("/:id", async (request, response, next) => {
     const id = request.params.id;
     const body = request.body
     console.log(request.body)
@@ -54,11 +59,12 @@ blogsRouter.put("/:id", (request, response, next) => {
         runValidators: true,
         context: "query",
     };
-    Blog.findByIdAndUpdate(id, body, opts)
-        .then((result) => {
-            response.status(201).json(result);
-        })
-        .catch((error) => next(error));
+    try {
+        const updatedBlog = await Blog.findByIdAndUpdate(id, body, opts);
+        response.status(201).json(updatedBlog)
+    } catch (error) {
+        next(error)
+    }
 });
 
 
