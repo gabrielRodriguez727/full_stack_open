@@ -24,7 +24,7 @@ usersRouter.get('/:id', async (request, response, next) => {
     }
 })
 
-usersRouter.post('/', async (request, response) => {
+usersRouter.post('/', async (request, response, next) => {
     const body = request.body
 
     const saltRounds = 10
@@ -35,10 +35,13 @@ usersRouter.post('/', async (request, response) => {
         name: body.name,
         passwordHash,
     })
+    try {
+        const savedUser = await user.save()
+        response.json(savedUser)
+    } catch (error) {
+        next(error)
+    }
 
-    const savedUser = await user.save()
-
-    response.json(savedUser)
 })
 
 export default usersRouter
