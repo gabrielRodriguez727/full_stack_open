@@ -1,0 +1,29 @@
+//Add person
+POST http://localhost:3001/api/users/ HTTP/1.1
+content-type: application/json
+
+{
+    "username": "admin",
+    "name": "admin",
+    "password": "admin"
+}
+
+###
+//Error: Model required
+POST http://localhost:3001/api/users/ HTTP/1.1
+content-type: application/json
+
+{
+    
+}
+
+###
+//Error: Model validation
+POST http://localhost:3001/api/users/ HTTP/1.1
+content-type: application/json
+
+{
+    "content": "Mie",
+    "author": "lp",
+    "url": "lpp.dev/blog_time"
+}

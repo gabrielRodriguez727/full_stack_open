@@ -1,0 +1,3 @@
+###
+//Delete by id
+DELETE   http://localhost:3001/api/blogs/615a541549835ae613d2c4c0

@@ -1,4 +1,5 @@
 import Blog from '../models/blog.js'
+import User from '../models/user.js'
 
 const initialBlogs = [
     { _id: '5a422a851b54a676234d17f7', title: 'React patterns', author: 'Michael Chan', url: 'https://reactpatterns.com/', content: 'Maecenas aliquam ut neque quis venenatis. Nulla nibh mi, lobortis et commodo sed, sollicitudin et odio.', likes: 7, __v: 0 },
@@ -21,4 +22,10 @@ const blogsInDb = async () => {
     return blogs.map(blog => blog.toJSON())
 }
 
-export default { initialBlogs, nonExistingId, blogsInDb }
+
+const usersInDb = async () => {
+  const users = await User.find({})
+  return users.map(u => u.toJSON())
+}
+
+export default { initialBlogs, nonExistingId, blogsInDb, usersInDb }
