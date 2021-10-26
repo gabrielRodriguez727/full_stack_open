@@ -4,7 +4,7 @@ content-type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOiI2MTZhZDAwZjM3Nzc0MjM1MDZjYmJiNjkiLCJpYXQiOjE2MzQ0MzExMDJ9.mtfcBTBieOEv_m9MTTSiyQ2EgrgKDdPq383NFZcgNVw
 
 {
-    "content": "Mientras más tiempo pasas cerca del código, más te casas con la idea de que todo es lógico y lineal. Esto funciona bien durante una parte de tu carrera, pero termina jugándote en contra conforme vas creciendo y te haces más consciente de que en realidad todo se trata de personas — las que usan tu software, y con las que colaboras.",
+    "title": "Mientras más tiempo pasas cerca del código, más te casas con la idea de que todo es lógico y lineal. Esto funciona bien durante una parte de tu carrera, pero termina jugándote en contra conforme vas creciendo y te haces más consciente de que en realidad todo se trata de personas — las que usan tu software, y con las que colaboras.",
     "author": "lpp",
     "url": "lpp.dev/blog_time",
     "userId":"616ad00f3777423506cbbb69"
@@ -25,7 +25,7 @@ POST http://localhost:3001/api/blogs/ HTTP/1.1
 content-type: application/json
 
 {
-    "content": "Mie",
+    "title": "Mie",
     "author": "lp",
     "url": "lpp.dev/blog_time"
 }
